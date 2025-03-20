@@ -26,7 +26,7 @@ You can create a client instance with the `coin` and `network` specified in the 
 #### Example 1: Set Coin and Network in the Constructor
 
 ```typescript
-import { createBlockCypherClient } from "blockcypher-typesafe-client";
+import { createBlockCypherClient } from "blockcypher-client";
 
 // Create a client with 'eth' as the default coin and 'main' as the default network
 const client = createBlockCypherClient({

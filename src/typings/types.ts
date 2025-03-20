@@ -1,5 +1,3 @@
-import { AddressBalanceResponseMap } from "./api-response-types";
-
 export type BlockCypherOptions = {
     token?: string;
     coin?: Coin;
@@ -28,8 +26,6 @@ export type ChainOptions<Override extends Coin | undefined = undefined> =
     ? { coin: Override; network: Network }
     : { coin?: Coin; network?: Network };
 
-export type AddressBalanceResponse<T extends Coin> = AddressBalanceResponseMap[T];
-
 export type ResolveCoin<
   ConstructorCoin extends Coin | undefined,
   MethodCoin extends Coin | undefined
@@ -39,7 +35,7 @@ export type ResolveCoin<
     ? ConstructorCoin
     : never;
 
-export type ResolveMethodResponse<
+export type MethodResponse<
   ConstructorCoin extends Coin | undefined,
   MethodCoin extends Coin | undefined,
   MapT extends Record<string, any>
@@ -48,58 +44,11 @@ export type ResolveMethodResponse<
     ? never
     : MapT[ResolveCoin<ConstructorCoin, MethodCoin>];
 
-export type AddressBalanceMethodParams<ConstructorCoin extends Coin | undefined> =
-  ConstructorCoin extends Coin
-    ? (
-        address: string
-      ) => Promise<ResolveMethodResponse<ConstructorCoin, undefined, AddressBalanceResponseMap>>
-    : <
-        TChain extends ChainOptions
-      >(
-        address: string,
-        chain: TChain
-      ) => Promise<ResolveMethodResponse<undefined, ExtractCoin<TChain>, AddressBalanceResponseMap>>;
-
-export type ResolveChainOptionsInput<
-  MethodCoin,
-  ConstructorCoin
-> =
-  MethodCoin extends Coin
-    ? { coin: MethodCoin; network: Network }
-    : ConstructorCoin extends Coin
-      ? Partial<{ coin: ConstructorCoin; network: Network }>
-      : never;
-
-export type Flatten<T> = {
-    [K in keyof T]: T[K];
-};
-
-export type InferMethodCoin<TChain> =
-  TChain extends { coin: infer C } ? C & Coin : undefined;
-
-export type ExtractCoin<T> = T extends { coin: infer C } ? C : never;
-
-export type AddressBalanceParams<
+export type MethodParams<
   ConstructorCoin extends Coin | undefined,
-  MethodCoin extends Coin | undefined
+  MethodCoin extends Coin | undefined,
+  Params extends any[]
 > =
   ConstructorCoin extends Coin
-    ? [address: string]
-    : [address: string, chain: ChainOptions<MethodCoin>];
-
-export type BlockChainInfoParams<
-  ConstructorCoin extends Coin | undefined,
-  MethodCoin extends Coin | undefined
-> =
-  ConstructorCoin extends Coin
-    ? []
-    : [chain: ChainOptions<MethodCoin>];
-
-export type BlockParams<
-  ConstructorCoin extends Coin | undefined,
-  MethodCoin extends Coin | undefined
-> =
-  ConstructorCoin extends Coin
-    ? [hashOrHeigth: string]
-    : [hashOrHeigth: string, chain: ChainOptions<MethodCoin>];
-
+    ? Params
+    : [...Params, chain: ChainOptions<MethodCoin>];

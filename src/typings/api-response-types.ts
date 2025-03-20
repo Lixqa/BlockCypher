@@ -1,27 +1,5 @@
-export type BitcoinAddressBalanceResponse = {
-    address: string;
-    total_received: number;
-    total_sent: number;
-    balance: number;
-    unconfirmed_balance: number;
-    final_balance: number;
-    n_tx: number;
-    unconfirmed_n_tx: number;
-    final_n_tx: number;
-};
-export type EthereumAddressBalanceResponse = {
-    address: string;
-    total_received: number;
-    total_sent: number;
-    balance: number;
-    unconfirmed_balance: number;
-    final_balance: number;
-    n_tx: number;
-    unconfirmed_n_tx: number;
-    final_n_tx: number;
-    nonce: number;
-    pool_nonce: number;
-};
+export type BitcoinAddressBalanceResponse = Exclude<BitcoinAddress, "tx_url" | "txrefs" | "unconfirmed_txrefs">;
+export type EthereumAddressBalanceResponse = Exclude<EthereumAddress, "tx_url" | "txrefs" | "unconfirmed_txrefs">;
 export type LitecoinAddressBalanceResponse = BitcoinAddressBalanceResponse;
 export type DogecoinAddressBalanceResponse = BitcoinAddressBalanceResponse;
 export type DashAddressBalanceResponse = BitcoinAddressBalanceResponse;
@@ -81,7 +59,7 @@ export type BlockChainInfoResponseMap = {
 
 
 
-export type BaseBlock = {
+export type BaseBlockResponse = {
     hash: string;
     height: number;
     chain: string;
@@ -101,22 +79,80 @@ export type BaseBlock = {
     prev_block_url: string;
     tx_url: string;
 };
-export type BitcoinBlock = BaseBlock & {
+export type BitcoinBlockResponse = BaseBlockResponse & {
     vsize: number;
 };
-export type EthereumBlock = BaseBlock & {
+export type EthereumBlockResponse = BaseBlockResponse & {
     coinbase_addr: string;
 };
-export type LitecoinBlock = BitcoinBlock;
-export type DogeBlock = Omit<BitcoinBlock, "vsize">;
-export type DashBlock = DogeBlock;
-export type BlockCypherBlock = BitcoinBlock;
+export type LitecoinBlockResponse = BitcoinBlockResponse;
+export type DogeBlockResponse = Omit<BitcoinBlockResponse, "vsize">;
+export type DashBlockResponse = DogeBlockResponse;
+export type BlockCypherBlockResponse = BitcoinBlockResponse;
 
 export type BlockResponseMap = {
-    "btc": BitcoinBlock;
-    "eth": EthereumBlock;
-    "ltc": LitecoinBlock;
-    "doge": DogeBlock;
-    "dash": DashBlock;
-    "bcy": BlockCypherBlock;
+    "btc": BitcoinBlockResponse;
+    "eth": EthereumBlockResponse;
+    "ltc": LitecoinBlockResponse;
+    "doge": DogeBlockResponse;
+    "dash": DashBlockResponse;
+    "bcy": BlockCypherBlockResponse;
+}
+
+
+
+export type BaseTxRef = {
+    tx_hash: string;
+    block_height: number;
+    tx_input_n: number;
+    tx_output_n: number;
+    value: number;
+    ref_balance: number;
+    spent: boolean;
+    spent_by: string;
+    confirmations: number;
+    confirmed: string;
+    double_spend: boolean;
+    preference: string;
+}
+export type BitcoinTxRef = BaseTxRef;
+export type EthereumTxRef = BaseTxRef;
+export type LitecoinTxRef = BaseTxRef;
+export type DogecoinTxRef = BaseTxRef;
+export type DashTxRef = BaseTxRef;
+export type BlockCypherTxRef = BaseTxRef;
+
+
+
+export type BaseAddress = {
+    address: string;
+    total_received: number;
+    total_sent: number;
+    balance: number;
+    unconfirmed_balance: number;
+    final_balance: number;
+    n_tx: number;
+    unconfirmed_n_tx: number;
+    final_n_tx: number;
+    txrefs: BaseTxRef[];
+    unconfirmed_txrefs: (BaseTxRef & { preference: string })[];
+    tx_url: string;
+}
+export type BitcoinAddress = BaseAddress;
+export type EthereumAddress = BaseAddress & {
+    nonce: number;
+    pool_nonce: number;
+};
+export type LitecoinAddress = BitcoinAddress;
+export type DogecoinAddress = BitcoinAddress;
+export type DashAddress = BitcoinAddress;
+export type BlockCypherAddress = BitcoinAddress;
+
+export type AddressResponseMap = {
+    "btc": BitcoinAddress;
+    "eth": EthereumAddress;
+    "ltc": LitecoinAddress;
+    "doge": DogecoinAddress;
+    "dash": DashAddress;
+    "bcy": BlockCypherAddress;
 }
