@@ -1,6 +1,6 @@
 import { ApiError } from "./errors/api";
 import { AddressBalanceResponseMap, BlockChainInfoResponseMap, BlockResponseMap } from "./typings/api-response-types";
-import { AddressBalanceParams, BlockChainInfoParams, BlockCypherOptions, BlockParams, ChainOptions, Coin, RequestOptions, ResolveMethodResponse } from "./typings/types";
+import { AddressBalanceParams, BlockChainInfoParams, BlockCypherOptions, BlockParams, Coin, RequestOptions, ResolveMethodResponse } from "./typings/types";
 
 export function createBlockCypherClient<TCoin extends Coin | undefined = undefined>(
     options?: BlockCypherOptions & { coin?: TCoin }

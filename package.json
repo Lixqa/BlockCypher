@@ -18,7 +18,28 @@
     "url": "https://github.com/Lixqa/BlockCypher/issues"
   },
   "homepage": "https://github.com/Lixqa/BlockCypher#readme",
-  "description": "",
+  "description": "A TypeScript client for interacting with BlockCypher's API that provides strong typing and safety when interacting with BlockCypher services.",
+  "keywords": [
+    "blockcypher",
+    "blockchain",
+    "typescript",
+    "client",
+    "typesafe",
+    "api",
+    "bitcoin",
+    "explorer",
+    "ethereum",
+    "litecoin",
+    "dogecoin",
+    "dash",
+    "blockcypher.com"
+  ],
+  "maintainers": [
+    {
+      "name": "Lixqa",
+      "email": "lixqadev@gmail.com"
+    }
+  ],
   "dependencies": {
     "typescript": "^5.8.2"
   }

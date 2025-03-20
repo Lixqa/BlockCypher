@@ -1,4 +1,4 @@
-import { AddressBalanceResponseMap, BitcoinAddressBalanceResponse, BlockCypherAddressBalanceResponse, DashAddressBalanceResponse, DogecoinAddressBalanceResponse, EthereumAddressBalanceResponse, LitecoinAddressBalanceResponse } from "./api-response-types";
+import { AddressBalanceResponseMap } from "./api-response-types";
 
 export type BlockCypherOptions = {
     token?: string;
