@@ -36,7 +36,7 @@ const client = createBlockCypherClient({
 });
 
 // Get address balance for Ethereum (no need to pass coin and network here)
-const response = await client.getAddressBalance("0xAddressHere")
+const response = await client.getAddressBalance("0xAddressHere");
 
 console.log(response);
 ```
