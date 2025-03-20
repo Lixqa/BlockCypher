@@ -41,7 +41,7 @@ const response = await client.getAddressBalance("0xAddressHere")
 console.log(response);
 ```
 
-#### Example 2: Override Coin and Network in Method Call
+#### Example 2: Specify Coin and Network in Method Call
 
 ```typescript
 import { createBlockCypherClient } from "blockcypher-client";
@@ -49,7 +49,7 @@ import { createBlockCypherClient } from "blockcypher-client";
 // Create a universal client without specifying a coin or network
 const client = createBlockCypherClient();
 
-// Override coin and network in the method call
+// Specify coin and network in the method call
 const response = await client.getAddressBalance("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa", {
   coin: "btc",
   network: "main"
