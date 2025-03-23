@@ -44,13 +44,14 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
         // ###################################################
 
+        if (this.options.token) options.query = { token: this.options.token, ...options.query };
+
         const query = new URLSearchParams(options.query);
 
         const url = `${this.baseUrl}/${coin}/${network}/${path}${query ? `?${query}` : ""}`;
 
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": this.options?.token ? `Bearer ${this.options.token}` : "",
             "User-Agent": this.options?.userAgent || "blockcypher-client-lixqa",
             ...options.headers
         };
