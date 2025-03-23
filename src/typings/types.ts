@@ -1,3 +1,5 @@
+import { SUPPORTED_COIN_NETWORKS } from "../constants";
+
 export type BlockCypherOptions = {
     token?: string;
     coin?: Coin;
@@ -17,9 +19,9 @@ export type RequestOptions = {
     _currentRateLimitRetryAttempt?: number;
 };
 
-export type Coin = "btc" | "eth" | "dash" | "doge" | "ltc" | "bcy";
+export type Coin = keyof typeof SUPPORTED_COIN_NETWORKS;
 
-export type Network = "main" | "test3" | "test";
+export type Network = typeof SUPPORTED_COIN_NETWORKS[Coin][number];
 
 export type ChainOptions<Override extends Coin | undefined = undefined> = 
   Override extends Coin

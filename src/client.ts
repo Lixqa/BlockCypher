@@ -1,5 +1,7 @@
+import { SUPPORTED_COIN_NETWORKS } from "./constants";
 import { ApiError } from "./errors/api";
-import { AddressBalanceResponseMap, AddressResponseMap, BlockChainInfoResponseMap, BlockResponseMap } from "./typings/api-response-types";
+import { AddressBalanceMap, AddressMap, BlockChainInfoMap, BlockMap, TransactionMap } from "./typings/api-response-mappings";
+import { TransactionConfidence } from "./typings/api-response-types";
 import { BlockCypherOptions, Coin, RequestOptions, MethodResponse, MethodParams } from "./typings/types";
 
 export function createBlockCypherClient<TCoin extends Coin | undefined = undefined>(
@@ -21,8 +23,8 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
     }
 
     private async request(path: string, options: Exclude<RequestOptions, "_currentRateLimitRetryAttempt">): Promise<any> {
-        const coin = options.coin || this.options.coin;
-        const network = options.network || this.options.network;
+        const coin = this.options.coin ||options.coin;
+        const network = this.options.network || options.network;
 
         // ###################################################
 
@@ -40,6 +42,10 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
         if (this.options.network && options.network) {
             throw new Error("Network is already set in the constructor");
+        }
+
+        if (!(SUPPORTED_COIN_NETWORKS[coin] as any).includes(network)) {
+            throw new Error(`Network ${network} is not supported for coin ${coin}`);
         }
 
         // ###################################################
@@ -89,7 +95,7 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
     async getAddressBalance<MethodCoin extends Coin | undefined = undefined>(
         ...args: MethodParams<ConstructorCoin, MethodCoin, [ address: string ]>
-      ): Promise<MethodResponse<ConstructorCoin, MethodCoin, AddressBalanceResponseMap>> {
+      ): Promise<MethodResponse<ConstructorCoin, MethodCoin, AddressBalanceMap>> {
         const [ address, maybeChain ] = args;
       
         return this.request(`addrs/${address}/balance`, {
@@ -100,7 +106,7 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
     async getBlockChainInfo<MethodCoin extends Coin | undefined = undefined>(
         ...args: MethodParams<ConstructorCoin, MethodCoin, []>
-    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, BlockChainInfoResponseMap>> {
+    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, BlockChainInfoMap>> {
         const [ maybeChain ] = args;
 
         return this.request("", {
@@ -111,7 +117,7 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
     async getBlock<MethodCoin extends Coin | undefined = undefined>(
         ...args: MethodParams<ConstructorCoin, MethodCoin, [ blockHashOrHeight: string ]>
-    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, BlockResponseMap>> {
+    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, BlockMap>> {
         const [ blockHashOrHeight, maybeChain ] = args;
 
         return this.request(`blocks/${blockHashOrHeight}`, {
@@ -122,7 +128,7 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
     async getAddress<MethodCoin extends Coin | undefined = undefined>(
         ...args: MethodParams<ConstructorCoin, MethodCoin, [ address: string ]>
-    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, AddressResponseMap>> {
+    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, AddressMap>> {
         const [ address, maybeChain ] = args;
 
         return this.request(`addrs/${address}`, {
@@ -133,7 +139,7 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
     async getTransaction<MethodCoin extends Coin | undefined = undefined>(
         ...args: MethodParams<ConstructorCoin, MethodCoin, [ hash: string ]>
-    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, any>> {
+    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, TransactionMap>> {
         const [ hash, maybeChain ] = args;
 
         return this.request(`txs/${hash}`, {
@@ -144,7 +150,7 @@ class BlockCypherClient<ConstructorCoin extends Coin | undefined = undefined> {
 
     async getTransactionConfidence<MethodCoin extends Coin | undefined = undefined>(
         ...args: MethodParams<ConstructorCoin, MethodCoin, [ hash: string ]>
-    ): Promise<MethodResponse<ConstructorCoin, MethodCoin, any>> {
+    ): Promise<TransactionConfidence> {
         const [ hash, maybeChain ] = args;
 
         return this.request(`txs/${hash}/confidence`, {
