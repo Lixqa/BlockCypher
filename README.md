@@ -86,9 +86,9 @@ client.on({
   coin: "btc",
   network: "main",
   token: "your-api-token",
-  event: "tx-confirmation"
-}, (tx) => {
-  console.log("Confirmed tx:", tx);
+  event: "new-block"
+}, (block) => {
+  console.log("New block:", block);
 });
 ```
 
@@ -102,9 +102,8 @@ client.once("double-spend-tx", (tx) => { ... });
 - `unconfirmed-tx`
 - `confirmed-tx`
 - `new-block`
-- `tx-confirmation`
 - `double-spend-tx`
-- `ping` (responds with `{ event: "pong" }`)
+- `ping`
 
 ### 🔄 Auto-Reconnect
 If the WebSocket connection drops, the client will automatically reconnect with exponential backoff and re-subscribe to your events. All registered callbacks are restored.
@@ -129,7 +128,7 @@ All API and WebSocket activity is logged with `console.debug`:
 ---
 
 ## 📦 Links
-- [GitHub Repository](https://github.com/lixqa/blockcypher-client)
+- [GitHub Repository](https://github.com/Lixqa/BlockCypher)
 - [NPM Package](https://www.npmjs.com/package/blockcypher-client)
 - [BlockCypher API Docs](https://www.blockcypher.com/dev/bitcoin/)
 
@@ -137,4 +136,4 @@ All API and WebSocket activity is logged with `console.debug`:
 
 ## 📚 License
 
-MIT — see [LICENSE](LICENSE)
+MIT
