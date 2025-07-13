@@ -54,3 +54,13 @@ export type MethodParams<
   ConstructorCoin extends Coin
     ? Params
     : [...Params, chain: ChainOptions<MethodCoin>];
+
+declare global {
+  interface PromiseConstructor {
+    withResolvers<T>(): {
+      promise: Promise<T>;
+      resolve: (value: T | PromiseLike<T>) => void;
+      reject: (reason?: any) => void;
+    };
+  }
+}
