@@ -1,7 +1,7 @@
 # 🚀 BlockCypher TypeScript Client
 
 [![npm version](https://img.shields.io/npm/v/blockcypher-client.svg)](https://www.npmjs.com/package/blockcypher-client)
-[![GitHub](https://img.shields.io/github/stars/lixqa/blockcypher-client?style=social)](https://github.com/lixqa/blockcypher-client)
+[![GitHub](https://img.shields.io/github/stars/Lixqa/BlockCypher?style=social)](https://github.com/Lixqa/BlockCypher)
 
 A modern, type-safe, and ergonomic TypeScript SDK for the [BlockCypher](https://www.blockcypher.com/dev/bitcoin/) blockchain API. Effortlessly interact with Bitcoin, Ethereum, Litecoin, Dogecoin, Dash, and more—whether you need REST or real-time WebSocket events.
 
