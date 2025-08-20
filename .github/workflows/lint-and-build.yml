@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: 🔍 Run ESLint
-        run: npm run lint:check
+        run: npm run lint
 
       - name: 🔎 Check code formatting with Prettier
         run: npm run format:check
