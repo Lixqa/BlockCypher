@@ -25,15 +25,15 @@ npm install blockcypher-client
 ```
 
 ```typescript
-import { createBlockCypherClient } from "blockcypher-client";
+import { createBlockCypherClient } from 'blockcypher-client';
 
 const client = createBlockCypherClient({
-  token: "your-api-token",
-  coin: "btc",
-  network: "main"
+  token: 'your-api-token',
+  coin: 'btc',
+  network: 'main',
 });
 
-const balance = await client.getAddressBalance("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa");
+const balance = await client.getAddressBalance('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa');
 console.log(balance);
 ```
 
@@ -44,13 +44,16 @@ console.log(balance);
 ### 1. Client Creation
 
 **With Defaults:**
+
 ```typescript
-const client = createBlockCypherClient({ token, coin: "eth", network: "main" });
+const client = createBlockCypherClient({ token, coin: 'eth', network: 'main' });
 ```
+
 **Per-Request:**
+
 ```typescript
 const client = createBlockCypherClient();
-const info = await client.getBlockChainInfo({ coin: "btc", network: "test3" });
+const info = await client.getBlockChainInfo({ coin: 'btc', network: 'test3' });
 ```
 
 ### 2. Core REST Methods
@@ -63,8 +66,12 @@ const info = await client.getBlockChainInfo({ coin: "btc", network: "test3" });
 - `getTransactionConfidence(hash[, options])`
 
 **Example:**
+
 ```typescript
-const block = await client.getBlock("000000...", { coin: "btc", network: "main" });
+const block = await client.getBlock('000000...', {
+  coin: 'btc',
+  network: 'main',
+});
 ```
 
 ---
@@ -74,31 +81,38 @@ const block = await client.getBlock("000000...", { coin: "btc", network: "main" 
 ### Effortless Subscriptions
 
 **String Form (when client has all options):**
+
 ```typescript
-client.on("new-block", (block) => {
-  console.log("New block:", block);
+client.on('new-block', (block) => {
+  console.log('New block:', block);
 });
 ```
 
 **Object Form (specify per-event):**
+
 ```typescript
-client.on({
-  coin: "btc",
-  network: "main",
-  token: "your-api-token",
-  event: "new-block"
-}, (block) => {
-  console.log("New block:", block);
-});
+client.on(
+  {
+    coin: 'btc',
+    network: 'main',
+    token: 'your-api-token',
+    event: 'new-block',
+  },
+  (block) => {
+    console.log('New block:', block);
+  },
+);
 ```
 
 **Remove or Once:**
+
 ```typescript
 client.off("new-block", handler);
 client.once("double-spend-tx", (tx) => { ... });
 ```
 
 ### Supported Events
+
 - `unconfirmed-tx`
 - `confirmed-tx`
 - `new-block`
@@ -106,6 +120,7 @@ client.once("double-spend-tx", (tx) => { ... });
 - `ping`
 
 ### 🔄 Auto-Reconnect
+
 If the WebSocket connection drops, the client will automatically reconnect with exponential backoff and re-subscribe to your events. All registered callbacks are restored.
 
 ---
@@ -113,8 +128,9 @@ If the WebSocket connection drops, the client will automatically reconnect with 
 ## 🧑‍💻 Advanced: Type Safety & Typings
 
 All types are exported from the package root:
+
 ```typescript
-import type { Coin, Network, WebSocketEventType, WebSocketEventParams } from "blockcypher-client";
+import type { Coin, Network, WebSocketEventType, WebSocketEventParams } from 'blockcypher-client';
 ```
 
 ---
@@ -122,12 +138,14 @@ import type { Coin, Network, WebSocketEventType, WebSocketEventParams } from "bl
 ## 🐞 Debugging & Logging
 
 All API and WebSocket activity is logged with `console.debug`:
+
 - Requests, responses, errors, retries
 - WebSocket connects, disconnects, reconnects, messages, and errors
 
 ---
 
 ## 📦 Links
+
 - [GitHub Repository](https://github.com/Lixqa/BlockCypher)
 - [NPM Package](https://www.npmjs.com/package/blockcypher-client)
 - [BlockCypher API Docs](https://www.blockcypher.com/dev/bitcoin/)

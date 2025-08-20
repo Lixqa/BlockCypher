@@ -1,4 +1,9 @@
 /node_modules
 /src
+/.vscode
+/.github
 tsconfig.json
-.gitignore
+.prettierignore
+.prettierrc
+eslint.config.mjs
+tsconfig.json
